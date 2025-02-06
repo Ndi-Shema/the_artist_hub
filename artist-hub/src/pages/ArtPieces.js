@@ -1,32 +1,35 @@
 // artist-hub/src/pages/ArtPieces.js
 import React, { useState, useEffect } from 'react';
 import ArtPieceCard from '../components/ArtPieceCard';
-import axios from 'axios';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+`;
 
 const ArtPieces = () => {
   const [artPieces, setArtPieces] = useState([]);
 
   useEffect(() => {
-    const fetchArtPieces = async () => {
-      try {
-        const response = await axios.get('/api/art-pieces');
-        setArtPieces(response.data);
-      } catch (error) {
-        console.error('Failed to fetch art pieces:', error);
-      }
-    };
-    fetchArtPieces();
+    // Simulate fetching data from an API
+    const mockData = [
+      { id: 1, title: 'Landscape', description: 'A beautiful landscape painting.', price: 150, imageUrl: 'https://via.placeholder.com/300' },
+      { id: 2, title: 'Portrait', description: 'A stunning portrait.', price: 200, imageUrl: 'https://via.placeholder.com/300' },
+      { id: 3, title: 'Abstract', description: 'An abstract masterpiece.', price: 180, imageUrl: 'https://via.placeholder.com/300' },
+    ];
+    setArtPieces(mockData);
   }, []);
 
   return (
-    <div>
-      <h1>Art Pieces</h1>
-      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-        {artPieces.map((artPiece) => (
-          <ArtPieceCard key={artPiece.id} artPiece={artPiece} />
-        ))}
-      </div>
-    </div>
+    <Container>
+      {artPieces.map((artPiece) => (
+        <ArtPieceCard key={artPiece.id} artPiece={artPiece} />
+      ))}
+    </Container>
   );
 };
 
