@@ -7,20 +7,6 @@ import ArtPieces from './pages/ArtPieces';
 import Login from './components/Login';
 import Register from './components/Register';
 
-function App() {
-  return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/art-pieces" element={<ArtPieces />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-      </Routes>
-    </Router>
-  );
-}
-
 // artist-hub/src/App.js
 function App() {
   return (
