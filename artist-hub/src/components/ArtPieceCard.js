@@ -1,4 +1,4 @@
-// src/components/ArtPieceCard.js
+// artist-hub/src/components/ArtPieceCard.js
 import React from 'react';
 import styled from 'styled-components';
 
