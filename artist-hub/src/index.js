@@ -9,5 +9,5 @@ ReactDOM.render(
     <GlobalStyles />
     <App />
   </>,
-  document.getElementById('root')
+  document.getElementById('root') // Ensure this matches the ID in index.html
 );

@@ -21,4 +21,22 @@ function App() {
   );
 }
 
+// artist-hub/src/App.js
+function App() {
+  return (
+    <Router>
+      <Navbar />
+      <div style={{ padding: '20px' }}>
+        <h2>Loading...</h2> {/* Temporary fallback */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/art-pieces" element={<ArtPieces />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+}
+
 export default App;
