@@ -30,7 +30,7 @@ const Home = () => {
   return (
     <>
       <HeroSection>
-        <h1>Welcome to the Art E-Shop!</h1>
+        <h1>Welcome to the the Artist Hub!</h1>
         <p>Discover unique art pieces from talented artists.</p>
         <Button>Explore Now</Button>
       </HeroSection>

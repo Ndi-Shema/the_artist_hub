@@ -33,7 +33,7 @@ const NavLink = styled(Link)`
 const Navbar = () => {
   return (
     <Nav>
-      <Logo to="/">Art E-Shop</Logo>
+      <Logo to="/">the <b>Artist Hub</b></Logo>
       <div>
         <NavLink to="/">Home</NavLink>
         <NavLink to="/art-pieces">Art Pieces</NavLink>
