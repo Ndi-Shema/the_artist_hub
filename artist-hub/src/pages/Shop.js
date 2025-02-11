@@ -4,10 +4,9 @@ import ArtPieceCard from '../components/ArtPieceCard';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
-  justify-content: center;
   padding: 20px;
 `;
 

@@ -3,20 +3,26 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Footer = styled.footer`
-  background-color: #282c34;
+  background-color: #333;
   color: white;
-  text-align: center;
   padding: 20px;
-  position: relative;
-  bottom: 0;
-  width: 100%;
+  text-align: center;
 `;
 
 const FooterContent = () => {
   return (
     <Footer>
-      <p>&copy; 2023 Art E-Shop. All rights reserved.</p>
-      <p>Contact us at: info@arte-shop.com</p>
+      <p>&copy; 2023 the Artist Hub. All rights reserved.</p>
+      <p>Follow us on social media:</p>
+      <div>
+        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+          Facebook
+        </a>
+        {' | '}
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+          Instagram
+        </a>
+      </div>
     </Footer>
   );
 };
