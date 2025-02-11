@@ -30,14 +30,10 @@ const Home = () => {
   return (
     <>
       <HeroSection>
-        <h1>Welcome to the the Artist Hub!</h1>
+        <h1>Welcome to Art E-Shop</h1>
         <p>Discover unique art pieces from talented artists.</p>
         <Button>Explore Now</Button>
       </HeroSection>
-      <div style={{ padding: '20px' }}>
-        <h2>Browse Our Collection</h2>
-        <p>Browse our collection of art pieces.</p>
-      </div>
     </>
   );
 };

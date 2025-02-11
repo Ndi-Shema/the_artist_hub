@@ -33,12 +33,12 @@ const NavLink = styled(Link)`
 const Navbar = () => {
   return (
     <Nav>
-      <Logo to="/">the <b>Artist Hub</b></Logo>
+      <Logo to="/">Art E-Shop</Logo>
       <div>
         <NavLink to="/">Home</NavLink>
-        <NavLink to="/art-pieces">Art Pieces</NavLink>
-        <NavLink to="/login">Login</NavLink>
-        <NavLink to="/register">Register</NavLink>
+        <NavLink to="/shop">Shop</NavLink>
+        <NavLink to="/about">About Us</NavLink>
+        <NavLink to="/contact">Contact</NavLink>
       </div>
     </Nav>
   );
