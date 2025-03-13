@@ -8,7 +8,8 @@ import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 import { useCallback } from "react";
 
 export default function ShoppingCartModal() {
-  const { cartCount, shouldDisplayCart, handleCartClick, cartDetails, removeItem, totalPrice } = useShoppingCart();
+  const { cartCount, shouldDisplayCart, handleCartClick, cartDetails, removeItem, totalPrice, setItemQuantity } =
+    useShoppingCart();
 
   console.log("Flutterwave Public Key:", process.env.NEXT_PUBLIC_FLW_PUBLIC_KEY);
 
@@ -75,10 +76,10 @@ export default function ShoppingCartModal() {
               {cartCount === 0 ? (
                 <h1 className="py-6">You don't have any items.</h1>
               ) : (
-                Object.values(cartDetails ?? {}).map((entry) => (
-                  <li key={entry.id} className="flex py-6">
+                Object.values(cartDetails ?? {}).map((entry, index) => (
+                  <li key={`${entry.id}-${index}`} className="flex py-6">
                     <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border-gray-200">
-                      <Image src={entry.image as string} alt="product image" width={100} height={100} />
+                      <Image src={entry.image as string} alt={entry.name} width={100} height={100} />
                     </div>
                     <div className="ml-4 flex flex-1 flex-col">
                       <div>
@@ -88,9 +89,31 @@ export default function ShoppingCartModal() {
                         </div>
                         <p className="mt-1 text-sm text-gray-500 line-clamp-2">{entry.description}</p>
                       </div>
+
+                      {/* Quantity Controller - FIXED */}
                       <div className="flex flex-1 items-end justify-between text-sm">
-                        <p className="text-gray-500">QTY: {entry.quantity}</p>
-                        <button type="button" onClick={() => removeItem(entry.id)} className="font-medium text-primary hover:text-primary/80">
+                        <div className="flex items-center space-x-2">
+                          <button
+                            onClick={() => setItemQuantity(entry.id, entry.quantity - 1)}
+                            disabled={entry.quantity === 1}
+                            className="px-2 py-1 bg-gray-200 rounded"
+                          >
+                            ➖
+                          </button>
+                          <p className="text-gray-500">{entry.quantity}</p>
+                          <button
+                            onClick={() => setItemQuantity(entry.id, entry.quantity + 1)}
+                            className="px-2 py-1 bg-gray-200 rounded"
+                          >
+                            ➕
+                          </button>
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => removeItem(entry.id)}
+                          className="font-medium text-red-500 hover:text-red-700"
+                        >
                           Remove
                         </button>
                       </div>
@@ -109,11 +132,7 @@ export default function ShoppingCartModal() {
             <p className="mt-0.5 text-sm text-gray-500">Delivery and taxes are calculated at checkout.</p>
 
             <div className="mt-6">
-              <Button
-                className="w-full"
-                onClick={handlePayment}
-                disabled={cartCount === 0 || !totalPrice}
-              >
+              <Button className="w-full" onClick={handlePayment} disabled={cartCount === 0 || !totalPrice}>
                 Checkout with Flutterwave
               </Button>
             </div>
