@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { client } from "@/app/lib/sanity";
 
-
 interface Article {
   title: string;
   content: any[];
@@ -37,5 +36,14 @@ export default function ArticlePage() {
   if (loading) return <p>Loading...</p>;
   if (!article) return <p>Article not found.</p>;
 
-  return <div>{/* Article Content Here */}</div>;
+  return (
+    <div className="max-w-4xl mx-auto p-6">
+      <h1 className="text-3xl font-bold mb-4">{article.title}</h1>
+      <div className="prose prose-lg">
+        {article.content && article.content.map((block, idx) => (
+          <p key={idx}>{JSON.stringify(block)}</p>
+        ))}
+      </div>
+    </div>
+  );
 }
