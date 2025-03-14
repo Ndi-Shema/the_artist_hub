@@ -3,8 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { client } from "@/app/lib/sanity";
-import { PortableText } from "@portabletext/react";
-import Image from "next/image";
+
 
 interface Article {
   title: string;
