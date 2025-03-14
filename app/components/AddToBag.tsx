@@ -9,7 +9,7 @@ export interface ProductCart {
   description: string;
   price: number;
   currency: string;
-  image: any;
+  image: unknown;
 }
 
 export function AddToBag({
@@ -22,11 +22,11 @@ export function AddToBag({
   const { addItem, handleCartClick } = useShoppingCart();
 
   const product = {
-    id: `${name}-${Date.now()}`, // Ensures a unique ID every time
-    name: name,
-    description: description,
-    price: price,
-    currency: currency,
+    id: `${name}-${Date.now()}`,
+    name,
+    description,
+    price,
+    currency,
     image: urlfor(image).url(),
   };
 
