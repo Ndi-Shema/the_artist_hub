@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { ShoppingBag } from "lucide-react";
 import { useShoppingCart } from "use-shopping-cart";
 
@@ -11,11 +11,12 @@ const links = [
   { name: "Abstract", href: "/Abstract" },
   { name: "Culture", href: "/Culture" },
   { name: "Beautiful", href: "/Beautiful" },
-  { name: "Legal Articles", href: "/education", isButton: true }, // Updated
+  { name: "Legal Articles", href: "/education", isButton: true },
 ];
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const { handleCartClick } = useShoppingCart();
 
   return (
@@ -30,18 +31,19 @@ export default function Navbar() {
         <nav className="hidden gap-12 lg:flex 2xl:ml-16">
           {links.map((link, idx) => {
             if (link.isButton) {
-              // Render a filled button for "Legal Articles"
+              // Use router.push to navigate programmatically
               return (
                 <div className="ml-12" key={idx}>
-                  <Link href={link.href}>
-                    <Button variant="default" className="bg-primary hover:bg-primary/70 text-white">
-                      {link.name}
-                    </Button>
-                  </Link>
+                  <Button
+                    onClick={() => router.push(link.href)}
+                    variant="default"
+                    className="bg-primary hover:bg-primary/70 text-white"
+                  >
+                    {link.name}
+                  </Button>
                 </div>
               );
             } else {
-              // Render a normal text link
               return (
                 <div key={idx}>
                   {pathname === link.href ? (
@@ -64,12 +66,14 @@ export default function Navbar() {
 
         <div className="flex divide-x border-r sm:border-l">
           <Button
-            variant={"outline"}
+            variant="outline"
             onClick={() => handleCartClick()}
             className="flex flex-col gap-y-1.5 h-12 w-12 sm:h-20 sm:w-24 md:w-24 rounded-none"
           >
             <ShoppingBag />
-            <span className="hidden text-xs font-semibold text-gray-500 sm:block">Cart</span>
+            <span className="hidden text-xs font-semibold text-gray-500 sm:block">
+              Cart
+            </span>
           </Button>
         </div>
       </div>
