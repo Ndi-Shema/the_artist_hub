@@ -5,16 +5,26 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sh
 import Image from "next/image";
 import { useShoppingCart } from "use-shopping-cart";
 import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 
 export default function ShoppingCartModal() {
-  const { cartCount, shouldDisplayCart, handleCartClick, cartDetails, removeItem, totalPrice, setItemQuantity } =
-    useShoppingCart();
+  const {
+    cartCount,
+    shouldDisplayCart,
+    handleCartClick,
+    cartDetails,
+    removeItem,
+    totalPrice,
+    setItemQuantity,
+  } = useShoppingCart();
 
-  console.log("Flutterwave Public Key:", process.env.NEXT_PUBLIC_FLW_PUBLIC_KEY);
+  // ⭐ NEW: Let the user enter a phone number
+  const [phoneNumber, setPhoneNumber] = useState("");
 
+  // Minimum total to avoid 0 in Flutterwave
   const totalAmount = totalPrice > 0 ? totalPrice : 1;
 
+  // Build the Flutterwave config
   const config = {
     public_key: process.env.NEXT_PUBLIC_FLW_PUBLIC_KEY,
     tx_ref: "ARTSHOP-" + Date.now(),
@@ -23,7 +33,8 @@ export default function ShoppingCartModal() {
     payment_options: "card, mobilemoneyrwanda",
     customer: {
       email: "fredshema24@gmail.com",
-      phone_number: "+250787591929",
+      // Use the phoneNumber state the user entered
+      phone_number: phoneNumber || "",
       name: "Shema Fred",
     },
     customizations: {
@@ -39,15 +50,9 @@ export default function ShoppingCartModal() {
     onclose: () => alert("Payment window closed"),
   };
 
-  console.log("Flutterwave Config:", config);
-
-  // Initialize Flutterwave payment function using the hook
   const handleFlutterwavePayment = useFlutterwave(config);
 
   const handlePayment = useCallback(() => {
-    console.log("Attempting to start Flutterwave payment...");
-    console.log("Config:", config);
-
     if (typeof handleFlutterwavePayment !== "function") {
       console.error("Flutterwave payment function is not initialized properly");
       return;
@@ -61,7 +66,7 @@ export default function ShoppingCartModal() {
       },
       onClose: () => alert("Payment window closed"),
     });
-  }, [handleFlutterwavePayment, config]);
+  }, [handleFlutterwavePayment]);
 
   return (
     <Sheet open={shouldDisplayCart} onOpenChange={() => handleCartClick()}>
@@ -79,7 +84,12 @@ export default function ShoppingCartModal() {
                 Object.values(cartDetails ?? {}).map((entry, index) => (
                   <li key={`${entry.id}-${index}`} className="flex py-6">
                     <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border-gray-200">
-                      <Image src={entry.image as string} alt={entry.name} width={100} height={100} />
+                      <Image
+                        src={entry.image as string}
+                        alt={entry.name}
+                        width={100}
+                        height={100}
+                      />
                     </div>
                     <div className="ml-4 flex flex-1 flex-col">
                       <div>
@@ -87,10 +97,12 @@ export default function ShoppingCartModal() {
                           <h3>{entry.name}</h3>
                           <p className="ml-4">${entry.price}</p>
                         </div>
-                        <p className="mt-1 text-sm text-gray-500 line-clamp-2">{entry.description}</p>
+                        <p className="mt-1 text-sm text-gray-500 line-clamp-2">
+                          {entry.description}
+                        </p>
                       </div>
 
-                      {/* Quantity Controller - FIXED */}
+                      {/* Quantity Controller */}
                       <div className="flex flex-1 items-end justify-between text-sm">
                         <div className="flex items-center space-x-2">
                           <button
@@ -124,15 +136,37 @@ export default function ShoppingCartModal() {
             </ul>
           </div>
 
+          {/* Footer Section */}
           <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
+
+            {/* ⭐ NEW: Input field for phone number */}
+            <div className="mb-4">
+              <label className="block mb-1 text-sm font-medium text-gray-700">
+                Phone Number (for Mobile Money):
+              </label>
+              <input
+                type="tel"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                className="w-full border rounded px-2 py-1 text-gray-700"
+                placeholder="+250 788 123 456"
+              />
+            </div>
+
             <div className="flex justify-between text-base font-medium text-gray-900">
               <p>Subtotal:</p>
               <p>${totalPrice}</p>
             </div>
-            <p className="mt-0.5 text-sm text-gray-500">Delivery and taxes are calculated at checkout.</p>
+            <p className="mt-0.5 text-sm text-gray-500">
+              Delivery and taxes are calculated at checkout.
+            </p>
 
             <div className="mt-6">
-              <Button className="w-full" onClick={handlePayment} disabled={cartCount === 0 || !totalPrice}>
+              <Button
+                className="w-full"
+                onClick={handlePayment}
+                disabled={cartCount === 0 || !totalPrice}
+              >
                 Checkout with Flutterwave
               </Button>
             </div>
@@ -140,7 +174,10 @@ export default function ShoppingCartModal() {
             <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
               <p>
                 OR{" "}
-                <button onClick={() => handleCartClick()} className="font-medium text-primary hover:text-primary/80">
+                <button
+                  onClick={() => handleCartClick()}
+                  className="font-medium text-primary hover:text-primary/80"
+                >
                   Continue Shopping
                 </button>
               </p>

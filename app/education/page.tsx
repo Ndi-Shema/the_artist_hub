@@ -60,14 +60,14 @@ export default function EducationPage() {
         placeholder="🔍 Search articles..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="border p-2 w-full mb-4 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="border p-2 w-full mb-4 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary"
       />
 
       {/* Category Filter */}
       <select
         value={selectedCategory}
         onChange={(e) => setSelectedCategory(e.target.value)}
-        className="border p-2 w-full mb-6 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="border p-2 w-full mb-6 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary"
       >
         <option value="">📂 All Categories</option>
         <option value="copyright">📝 Copyright</option>
