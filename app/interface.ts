@@ -5,14 +5,14 @@ export interface simplifiedProduct {
     slug: string;
     categoryName: string;
     name: string;
-}
+  }
 
-export interface fullProduct {
+  export interface fullProduct {
     _id: string;
-    images: any;
+    images: unknown;
     price: number;
     slug: string;
     categoryName: string;
     name: string;
     description: string;
-}
+  }

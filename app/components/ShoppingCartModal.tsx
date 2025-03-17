@@ -18,7 +18,7 @@ export default function ShoppingCartModal() {
     setItemQuantity,
   } = useShoppingCart();
 
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
 
   const totalAmount = totalPrice > 0 ? totalPrice : 1;
 
@@ -38,7 +38,7 @@ export default function ShoppingCartModal() {
       description: "Payment for items in cart",
       logo: "https://your-logo-url.com/logo.png",
     },
-    callback: (response: any) => {
+    callback: (response: unknown) => {
       console.log("Payment Response:", response);
       closePaymentModal();
       alert("Payment Successful!");
@@ -54,14 +54,14 @@ export default function ShoppingCartModal() {
       return;
     }
     handleFlutterwavePayment({
-      callback: (response: any) => {
+      callback: (response: unknown) => {
         console.log("Payment Response:", response);
         closePaymentModal();
         alert("Payment Successful!");
       },
       onClose: () => alert("Payment window closed"),
     });
-  }, [handleFlutterwavePayment, config]);
+  }, [handleFlutterwavePayment]); // removed 'config' from dependency array
 
   return (
     <Sheet open={shouldDisplayCart} onOpenChange={() => handleCartClick()}>

@@ -1,6 +1,5 @@
-
 import Hero from "./components/Hero";
-import Newest from "./components/Newest"
+import Newest from "./components/Newest";
 
 export default function Home() {
   return (
@@ -8,5 +7,5 @@ export default function Home() {
       <Hero />
       <Newest />
     </div>
-  )
+  );
 }
