@@ -6,7 +6,7 @@ import { client } from "@/app/lib/sanity";
 
 interface Article {
   title: string;
-  content: any[];
+  content: unknown[];
   image?: { asset: { url: string } };
   externalLink?: string;
   createdAt?: string;
@@ -40,9 +40,10 @@ export default function ArticlePage() {
     <div className="max-w-4xl mx-auto p-6">
       <h1 className="text-3xl font-bold mb-4">{article.title}</h1>
       <div className="prose prose-lg">
-        {article.content && article.content.map((block, idx) => (
-          <p key={idx}>{JSON.stringify(block)}</p>
-        ))}
+        {article.content &&
+          article.content.map((block, idx) => (
+            <p key={idx}>{JSON.stringify(block)}</p>
+          ))}
       </div>
     </div>
   );
